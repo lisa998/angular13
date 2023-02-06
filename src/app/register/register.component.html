@@ -1,0 +1,50 @@
+<p>register works!</p>
+<form [formGroup]="form" *ngIf="form">
+  <div>
+    帳號:
+    <input type="text" [formControlName]="formkey.account" />
+  </div>
+  <div>
+    密碼:
+    <input type="text" [formControlName]="formkey.password" />
+  </div>
+  <div>
+    國籍:
+    <input
+      type="radio"
+      [value]="citizenshipType.NATIVES"
+      id="natives"
+      [formControlName]="formkey.citizenship"
+    />
+    <label for="natives">本國</label>
+    <input
+      type="radio"
+      [value]="citizenshipType.FOREIGN"
+      id="foreign"
+      [formControlName]="formkey.citizenship"
+    />
+    <label for="foreign">外國</label>
+  </div>
+  <div>
+    <label for="idNumber">{{ idName }}:</label>
+    <input type="text" [formControlName]="formkey.idNumber" id="idNumber" />
+  </div>
+  <div>
+    <ng-container
+      *ngFor="
+        let occupation of form.controls[this.formkey.occupation].controls;
+        let i = index
+      "
+    >
+      <input
+        type="checkbox"
+        [formArrayName]="formkey.occupation"
+        [value]="occupation.value"
+        [formControlName]="occupation"
+      />
+      <label>{{ occupation.label }}</label>
+    </ng-container>
+  </div>
+  <button type="submit" (click)="submit()">Submit</button>
+  <p *ngIf="!form.valid && hadSubmited">inValid</p>
+</form>
